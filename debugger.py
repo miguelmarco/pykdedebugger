@@ -21,9 +21,8 @@ from PyQt4 import QtCore, QtGui, uic
 import time
 
 class Debugger(QtGui.QDialog):
-    def __init__(self):
+    def __init__(self, parent = None):
         QtGui.QDialog.__init__(self)
-
         self.ui = uic.loadUi("debugger.ui")
         self.history=[]
         self.nhistory=0
@@ -109,20 +108,20 @@ class Debugger(QtGui.QDialog):
         window.showhistory()
         #konsoleproxy.runCommand('globals()')
 
-
-bus=dbus.SessionBus()
-katebus=filter(lambda i: 'kate' in i, [aa.__str__() for aa in bus.list_names()])[0]
-konsoleproxy=bus.get_object(katebus,'/Sessions/1')
-kateproxy=bus.get_object(katebus,'/MainApplication')
-fileline=None
-app = QtGui.QApplication(sys.argv)
-window = Debugger()
-window.ui.nbutton.clicked.connect(window.printn)
-window.ui.qbutton.clicked.connect(window.printq)
-window.ui.sbutton.clicked.connect(window.prints)
-window.ui.rbutton.clicked.connect(window.printr)
-window.ui.untilbutton.clicked.connect(window.printuntil)
-window.ui.backbutton.clicked.connect(window.backbutton)
-window.ui.forwardbutton.clicked.connect(window.forwardbutton)
-window.ui.tracecommand.returnPressed.connect(window.tracecommand)
-sys.exit(app.exec_())
+if __name__ == "__main__":
+    bus=dbus.SessionBus()
+    katebus=filter(lambda i: 'kate' in i, [aa.__str__() for aa in bus.list_names()])[0]
+    konsoleproxy=bus.get_object(katebus,'/Sessions/1')
+    kateproxy=bus.get_object(katebus,'/MainApplication')
+    fileline=None
+    app = QtGui.QApplication(sys.argv)
+    window = Debugger()
+    window.ui.nbutton.clicked.connect(window.printn)
+    window.ui.qbutton.clicked.connect(window.printq)
+    window.ui.sbutton.clicked.connect(window.prints)
+    window.ui.rbutton.clicked.connect(window.printr)
+    window.ui.untilbutton.clicked.connect(window.printuntil)
+    window.ui.backbutton.clicked.connect(window.backbutton)
+    window.ui.forwardbutton.clicked.connect(window.forwardbutton)
+    window.ui.tracecommand.returnPressed.connect(window.tracecommand)
+    sys.exit(app.exec_())
