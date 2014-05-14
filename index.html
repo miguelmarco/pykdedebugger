@@ -1,0 +1,77 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Pykdedebugger by miguelmarco</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Pykdedebugger</h1>
+        <p>A small pykde application that helps debugging sage code.</p>
+
+        <p class="view"><a href="https://github.com/miguelmarco/pykdedebugger">View the Project on GitHub <small>miguelmarco/pykdedebugger</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/miguelmarco/pykdedebugger/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/miguelmarco/pykdedebugger/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/miguelmarco/pykdedebugger">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <p>This tool was originally developped as a tool for personal use. It is intended to help in the developping process of Sage (<a href="http://www.sagemath.org">http://www.sagemath.org</a>) in conjuction with the Kate editor (<a href="http://kate-editor.org/">http://kate-editor.org/</a>). What it does is basically parse the output of the konsole session in Kate to detect the local variables at each step of the debugging process. It also comunicates with kate through dbus to put the cursor in the line being currently executed, and send the debug control commands to the session.</p>
+
+<p>Installation:</p>
+
+<p>Just unpack the archive.</p>
+
+<p>Dependencies:</p>
+
+<ul>
+<li>Python</li>
+<li>PyQt</li>
+<li>Kate</li>
+<li>Sage</li>
+</ul><p>Instructions:</p>
+
+<ol>
+<li>Start Kate</li>
+<li>Start a log of the session, to do so, type "script -f logfile" (you can change the name of the log file as you want)</li>
+<li>Run debugger.py, a window will open</li>
+<li>In the upper bar, enter the location of the log file.</li>
+<li>Start sage in the konsole session of kate</li>
+<li>Do you usual work/development in sage</li>
+<li>When you want to trace the execution of some command, enter the command in the second text bar of the debugger, hit 
+return.</li>
+<li>The debugger app will send the "trace" command, which triggers the pdb process.</li>
+<li>From now, at each step you will see the file being executed in the kate editor, with the cursor at the line being 
+executed. The local variables will be shown in the window.</li>
+<li>The "Next step" button will run the next step of the execution, no matter in which funstion it is.</li>
+<li>The "Next step in function" will run the next step that stays in the current function. That is, if another function 
+is called, the execution continues until it returns to the current one.</li>
+<li>The "Return function" continues the execution until the current function returns.</li>
+<li>The "Quit debugger" finishes the pdb loop.</li>
+<li>The buttons "&lt;" and "&gt;" allows you to go back and forth the history of the previously executed steps. Note that this 
+does not mean that the execution of the command goes back, it just shows the previous states in the window.</li>
+</ol><p>For any question or comment, please email me.</p>
+
+<p><a href="mailto:mmarco@unizar.es">mmarco@unizar.es</a></p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/miguelmarco">miguelmarco</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
