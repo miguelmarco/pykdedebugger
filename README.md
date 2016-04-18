@@ -19,7 +19,7 @@ Instructions:
 3. Run debugger.py, a window will open
 4. In the upper bar, enter the location of the log file.
 5. Start sage in the konsole session of kate
-6. Do you usual work/development in sage
+6. Do your usual work/development in sage
 7. When you want to trace the execution of some command, enter the command in the second text bar of the debugger, hit 
 return.
 8. The debugger app will send the "trace" command, which triggers the pdb process.
