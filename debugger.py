@@ -88,8 +88,8 @@ class Debugger(QtGui.QDialog):
         time.sleep(0.1)
         logfile=open(str(window.ui.logfilerequester.text()))
         logfilelines=logfile.readlines()
-        stringparsed=logfilelines[-6]
-        print stringparsed
+        stringparsed=logfilelines[-8]
+        print "stringparsed=" + stringparsed +"\nend\n"
         a=stringparsed.index('(')
         b=stringparsed.index(')')
         katefilestring=stringparsed[2:a]
