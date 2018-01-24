@@ -8,7 +8,6 @@ Dependencies:
 
 * Python-2.7
 * PyQt-5
-* PyKDE-5
 * Kate
 * Sage
 
