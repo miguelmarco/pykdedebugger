@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>438</width>
+    <width>472</width>
     <height>697</height>
    </rect>
   </property>
@@ -22,26 +22,7 @@
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
-     <widget class="KUrlRequester" name="logfilerequester">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Expanding" vsizetype="Maximum">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>1000</width>
-        <height>50</height>
-       </size>
-      </property>
-      <property name="clickMessage">
-       <string/>
-      </property>
-      <property name="text">
-       <string notr="true"/>
-      </property>
-     </widget>
+     <widget class="QLineEdit" name="logfilerequester"/>
     </item>
     <item>
      <widget class="QLineEdit" name="tracecommand"/>
@@ -233,13 +214,6 @@ debugger</string>
    </layout>
   </widget>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>KUrlRequester</class>
-   <extends>QFrame</extends>
-   <header>kurlrequester.h</header>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>

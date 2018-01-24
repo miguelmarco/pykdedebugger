@@ -17,12 +17,13 @@
 
 import sys
 import dbus
-from PyQt4 import QtCore, QtGui, uic
+from PyQt5 import QtCore, QtGui, uic, QtWidgets
 import time
 
-class Debugger(QtGui.QDialog):
+
+class Debugger(QtWidgets.QDialog):
     def __init__(self, parent = None):
-        QtGui.QDialog.__init__(self)
+        QtWidgets.QDialog.__init__(self)
         self.ui = uic.loadUi("debugger.ui")
         self.history=[]
         self.nhistory=0
@@ -36,7 +37,7 @@ class Debugger(QtGui.QDialog):
 
 
     def printn(*args):
-        konsoleproxy.runCommand('n')
+        konsoleproxy.runCommand('next')
         window.actualize()
 
     def printuntil(*args):
@@ -44,14 +45,14 @@ class Debugger(QtGui.QDialog):
         window.actualize()
 
     def printr(*args):
-        konsoleproxy.runCommand('r')
+        konsoleproxy.runCommand('return')
         window.actualize()
 
     def printq(*args):
-        konsoleproxy.runCommand('q')
+        konsoleproxy.runCommand('quit')
 
     def prints(*args):
-        konsoleproxy.runCommand('s')
+        konsoleproxy.runCommand('step')
         window.actualize()
 
     def backbutton(*args):
@@ -65,15 +66,15 @@ class Debugger(QtGui.QDialog):
     def showhistory(*args):
         katefilestring=window.history[window.nhistory][0]
         katefileline=window.history[window.nhistory][1]
-        kateproxy.openUrl(katefilestring,'')
+        kateproxy.openUrl(u"file:/"+katefilestring,"ascii")
         kateproxy.setCursor(katefileline-1,0)
         window.ui.localslist.setRowCount(0)
         listparsed=window.history[window.nhistory][2]
         for entry in listparsed:
             rowNum = window.ui.localslist.rowCount()
             window.ui.localslist.insertRow(rowNum)
-            window.ui.localslist.setItem(rowNum, 0, QtGui.QTableWidgetItem(entry[0]))
-            window.ui.localslist.setItem(rowNum, 1, QtGui.QTableWidgetItem(entry[1]))
+            window.ui.localslist.setItem(rowNum, 0, QtWidgets.QTableWidgetItem(entry[0]))
+            window.ui.localslist.setItem(rowNum, 1, QtWidgets.QTableWidgetItem(entry[1]))
         if window.nhistory==0:
             window.ui.backbutton.setDisabled(True)
         else:
@@ -89,10 +90,9 @@ class Debugger(QtGui.QDialog):
         logfile=open(str(window.ui.logfilerequester.text()))
         logfilelines=logfile.readlines()
         stringparsed=logfilelines[-8]
-        print "stringparsed=" + stringparsed +"\nend\n"
         a=stringparsed.index('(')
         b=stringparsed.index(')')
-        katefilestring=stringparsed[2:a]
+        katefilestring=stringparsed[10:a-4]
         katefileline=int(stringparsed[a+1:b])
         logfile.close()
         konsoleproxy.runCommand('map(lambda a: (a[0],str(a[1])),locals().items())')
@@ -114,7 +114,7 @@ if __name__ == "__main__":
     konsoleproxy=bus.get_object(katebus,'/Sessions/1')
     kateproxy=bus.get_object(katebus,'/MainApplication')
     fileline=None
-    app = QtGui.QApplication(sys.argv)
+    app = QtWidgets.QApplication(sys.argv)
     window = Debugger()
     window.ui.nbutton.clicked.connect(window.printn)
     window.ui.qbutton.clicked.connect(window.printq)
