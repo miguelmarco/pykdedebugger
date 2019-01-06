@@ -86,17 +86,22 @@ class Debugger(QtWidgets.QDialog):
 
 
     def actualize(*args):
-        time.sleep(0.1)
-        logfile=open(str(window.ui.logfilerequester.text()))
-        logfilelines=logfile.readlines()
-        stringparsed=logfilelines[-8]
-        a=stringparsed.index('(')
-        b=stringparsed.index(')')
-        katefilestring=stringparsed[10:a-4]
-        katefileline=int(stringparsed[a+1:b])
-        logfile.close()
+        while True:
+            try:
+                time.sleep(0.1)
+                logfile=open(str(window.ui.logfilerequester.text()))
+                logfilelines=logfile.readlines()
+                stringparsed=logfilelines[-8]
+                a=stringparsed.index('(')
+                b=stringparsed.index(')')
+                katefilestring=stringparsed[10:a-4]
+                katefileline=int(stringparsed[a+1:b])
+                logfile.close()
+                break
+            except(ValueError):
+                pass
         konsoleproxy.runCommand('map(lambda a: (a[0],str(a[1])),locals().items())')
-        time.sleep(0.1)
+        time.sleep(0.2)
         logfile=open(str(window.ui.logfilerequester.text()))
         logfilelines=logfile.readlines()
         stringparsed=logfilelines[-2]
