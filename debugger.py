@@ -75,6 +75,7 @@ class Debugger(QtWidgets.QDialog):
             window.ui.localslist.insertRow(rowNum)
             window.ui.localslist.setItem(rowNum, 0, QtWidgets.QTableWidgetItem(entry[0]))
             window.ui.localslist.setItem(rowNum, 1, QtWidgets.QTableWidgetItem(entry[1]))
+            window.ui.localslist.resizeColumnsToContents()
         if window.nhistory==0:
             window.ui.backbutton.setDisabled(True)
         else:
@@ -86,7 +87,11 @@ class Debugger(QtWidgets.QDialog):
 
 
     def actualize(*args):
+        tries = 0
         while True:
+            tries += 1
+            if tries > 20:
+                return
             try:
                 time.sleep(0.1)
                 logfile=open(str(window.ui.logfilerequester.text()))
@@ -100,13 +105,16 @@ class Debugger(QtWidgets.QDialog):
                 break
             except(ValueError):
                 pass
-        konsoleproxy.runCommand('map(lambda a: (a[0],str(a[1])),locals().items())')
+        konsoleproxy.runCommand('[(a[0],str(a[1])) for a in locals().items()]')
         time.sleep(0.2)
         logfile=open(str(window.ui.logfilerequester.text()))
         logfilelines=logfile.readlines()
         stringparsed=logfilelines[-2]
         logfile.close()
-        listparsed=eval(stringparsed)
+        try:
+            listparsed=eval(stringparsed)
+        except:
+            listparsed=[]
         listparsed.sort()
         window.history.append([katefilestring,katefileline,listparsed])
         window.nhistory=len(window.history)-1
@@ -115,7 +123,7 @@ class Debugger(QtWidgets.QDialog):
 
 if __name__ == "__main__":
     bus=dbus.SessionBus()
-    katebus=filter(lambda i: 'kate' in i, [aa.__str__() for aa in bus.list_names()])[0]
+    katebus=list(filter(lambda i: 'kate' in i, [aa.__str__() for aa in bus.list_names()]))[0]
     konsoleproxy=bus.get_object(katebus,'/Sessions/1')
     kateproxy=bus.get_object(katebus,'/MainApplication')
     fileline=None
