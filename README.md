@@ -6,7 +6,7 @@ Just unpack the archive.
 
 Dependencies:
 
-* Python-2.7
+* Python 3
 * PyQt-5
 * Kate
 * Sage
