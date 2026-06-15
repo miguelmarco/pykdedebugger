@@ -17,7 +17,7 @@
 
 import sys
 import dbus
-from PyQt5 import QtCore, QtGui, uic, QtWidgets
+from PyQt6 import QtCore, QtGui, uic, QtWidgets
 import time
 
 
@@ -140,4 +140,4 @@ if __name__ == "__main__":
     window.ui.backbutton.clicked.connect(window.backbutton)
     window.ui.forwardbutton.clicked.connect(window.forwardbutton)
     window.ui.tracecommand.returnPressed.connect(window.tracecommand)
-    sys.exit(app.exec_())
+    sys.exit(app.exec())
